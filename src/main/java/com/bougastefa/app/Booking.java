@@ -44,26 +44,32 @@ public class Booking {
     this.flightId = flightId;
   }
 
+  @InputOrder(1)
   public String getBookingId() {
     return bookingId;
   }
 
+  @InputOrder(5)
   public String getCustomerId() {
     return customerId;
   }
 
+  @InputOrder(2)
   public int getAdultTicket() {
     return adultTicket;
   }
 
+  @InputOrder(3)
   public int getChildTicket() {
     return childTicket;
   }
 
+  @InputOrder(4)
   public int getConcessionTicket() {
     return concessionTicket;
   }
 
+  @InputOrder(6)
   public String getFlightId() {
     return flightId;
   }

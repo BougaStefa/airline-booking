@@ -1,5 +1,7 @@
 package com.bougastefa.app;
 
+import java.io.*;
+
 public class Customer {
   private String customerId;
   private String forename;
@@ -43,28 +45,34 @@ public class Customer {
     this.postcode = postcode;
   }
 
+  @InputOrder(1)
   public String getCustomerId() {
     return customerId;
   }
 
+  @InputOrder(2)
   public String getForename() {
     return forename;
   }
 
+  @InputOrder(3)
   public String getSurname() {
     return surname;
   }
 
+  @InputOrder(4)
   public String getStreet() {
     return street;
   }
 
+  @InputOrder(5)
   public String getTown() {
     return town;
   }
 
+  @InputOrder(6)
   public String postcode() {
     return postcode;
   }
-  // TODO: Create methods to export to a CSV file
-}
+  }
+
