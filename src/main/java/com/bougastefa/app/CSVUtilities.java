@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class Utilities {
 
   // Final export to CSV
-  public void exportCustomerToCsv(Object object, String filename) {
+  public void exportToCsv(Object object, String filename) {
     if (object == null) {
       throw new IllegalArgumentException("The object is null");
     }
