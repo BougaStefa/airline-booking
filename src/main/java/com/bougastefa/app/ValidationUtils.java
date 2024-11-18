@@ -95,9 +95,22 @@ public class ValidationUtils {
   }
 
   public static boolean isValidAirport(String airport) {
+    // Arrivals and departures mustn't be empty
     if (isNullOrEmpty(airport)) {
       return false;
     }
     return airport.matches("[A-Z]{3}$");
+  }
+
+  // When validating stops they can be empty
+  public static boolean isValidAirport(String airport, int stop) {
+    return airport.matches("[A-Z]{3}$");
+  }
+
+  public static boolean isValidFlightId(String flightId) {
+    if (isNullOrEmpty(flightId)) {
+      return false;
+    }
+    return flightId.matches("^[A-Z]{2}\\d{3}$");
   }
 }

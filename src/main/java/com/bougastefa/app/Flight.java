@@ -10,11 +10,11 @@ public class Flight {
   private String routeId;
   private LocalDate arrivalDate;
   private LocalTime arrivalTime;
-  private int capacity;
+  private String capacity;
 
   // Constructor
   public Flight(String flightId, LocalDate departureDate, LocalTime departureTime, String routeId,
-      LocalDate arrivalDate, LocalTime arrivalTime, int capacity) {
+      LocalDate arrivalDate, LocalTime arrivalTime, String capacity) {
     this.flightId = flightId;
     this.departureTime = departureTime;
     this.departureDate = departureDate;
@@ -49,7 +49,7 @@ public class Flight {
     this.arrivalTime = arrivalTime;
   }
 
-  public void setCapacity(int capacity) {
+  public void setCapacity(String capacity) {
     this.capacity = capacity;
   }
 
@@ -84,7 +84,7 @@ public class Flight {
   }
 
   @InputOrder(6)
-  public int getCapacity() {
+  public String getCapacity() {
     return capacity;
   }
 }

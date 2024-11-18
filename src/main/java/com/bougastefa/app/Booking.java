@@ -3,13 +3,13 @@ package com.bougastefa.app;
 public class Booking {
   private String bookingId;
   private String customerId;
-  private int adultTicket;
-  private int childTicket;
-  private int concessionTicket;
+  private String adultTicket;
+  private String childTicket;
+  private String concessionTicket;
   private String flightId;
 
   // Constructor
-  public Booking(String bookingId, String customerId, int adultTicket, int childTicket, int concessionTicket,
+  public Booking(String bookingId, String customerId, String adultTicket, String childTicket, String concessionTicket,
       String flightId) {
     this.bookingId = bookingId;
     this.customerId = customerId;
@@ -28,15 +28,15 @@ public class Booking {
     this.customerId = customerId;
   }
 
-  public void setAdultTicket(int adultTicket) {
+  public void setAdultTicket(String adultTicket) {
     this.adultTicket = adultTicket;
   }
 
-  public void setChildTicket(int childTicket) {
+  public void setChildTicket(String childTicket) {
     this.childTicket = childTicket;
   }
 
-  public void setConcessionTicket(int concessionTicket) {
+  public void setConcessionTicket(String concessionTicket) {
     this.concessionTicket = concessionTicket;
   }
 
@@ -55,17 +55,17 @@ public class Booking {
   }
 
   @InputOrder(2)
-  public int getAdultTicket() {
+  public String getAdultTicket() {
     return adultTicket;
   }
 
   @InputOrder(3)
-  public int getChildTicket() {
+  public String getChildTicket() {
     return childTicket;
   }
 
   @InputOrder(4)
-  public int getConcessionTicket() {
+  public String getConcessionTicket() {
     return concessionTicket;
   }
 
@@ -73,5 +73,4 @@ public class Booking {
   public String getFlightId() {
     return flightId;
   }
-  // !TODO: Add method to export a booking entry into a csv file.
 }
