@@ -74,5 +74,4 @@ public class Customer {
   public String postcode() {
     return postcode;
   }
-  }
-
+}

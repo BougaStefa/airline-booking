@@ -37,22 +37,27 @@ public class Route {
     this.midStopTwo = midStopTwo;
   }
 
+  @InputOrder(1)
   public String getRouteId() {
     return routeId;
   }
 
+  @InputOrder(2)
   public String getDepartFrom() {
     return departFrom;
   }
 
+  @InputOrder(3)
   public String getArriveAt() {
     return arriveAt;
   }
 
+  @InputOrder(4)
   public String getMidStopOne() {
     return midStopOne;
   }
 
+  @InputOrder(5)
   public String getMidStopTwo() {
     return midStopTwo;
   }

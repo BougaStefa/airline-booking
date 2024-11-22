@@ -2,7 +2,7 @@ package com.bougastefa.app;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 import javax.xml.validation.Validator;
@@ -94,15 +94,16 @@ public class Menu {
     System.out.println("Enter Flight Details:");
 
     String flightId = getValidatedInput("Flight ID: ", ValidationUtils::isValidFlightId);
-    LocalDate departureDate = LocalDate.parse(getValidatedInput("Departure Date: ", ValidationUtils::isValidDate));
-    LocalDate arrivalDate = LocalDate.parse(getValidatedInput("Arrival Date: ", ValidationUtils::isValidDate));
-    LocalTime departureTime = LocalTime.parse(getValidatedInput("Departure Time: ", ValidationUtils::isValidTime));
-    LocalTime arrivalTime = LocalTime.parse(getValidatedInput("Arrival Time: ", ValidationUtils::isValidTime));
+    String departureDate = getValidatedInput("Departure Date: ", ValidationUtils::isValidDate);
+    String arrivalDate = getValidatedInput("Arrival Date: ", ValidationUtils::isValidDate);
+    String departureTime = getValidatedInput("Departure Time: ", ValidationUtils::isValidTime);
+    String arrivalTime = getValidatedInput("Arrival Time: ", ValidationUtils::isValidTime);
     String capacity = getValidatedInput("Capacity: ", ValidationUtils::isValidPositiveInteger);
     InputValidationMethod routeIdLengthCheck = input -> ValidationUtils.isValidPositiveInteger(input, 50);
     String routeId = getValidatedInput("Route ID: ", routeIdLengthCheck);
 
-    Flight flight = new Flight(flightId, departureDate, departureTime, routeId, arrivalDate, arrivalTime, capacity);
+    Flight flight = new Flight(flightId, departureDate, departureTime, routeId, arrivalDate,
+        arrivalTime, capacity);
     CSVUtilities.exportToCsv(flight, "Flight.csv");
     System.out.println("Flight added to CSV file!");
   }
@@ -135,6 +136,7 @@ public class Menu {
     String midStopTwo = getValidatedInput(("Mid Stop Two: "), isValidStop);
 
     Route route = new Route(routeId, departFrom, arriveAt, midStopOne, midStopTwo);
+    System.out.println(routeId + departFrom + arriveAt + midStopTwo + midStopOne);
     CSVUtilities.exportToCsv(route, "Route.csv");
     System.out.println("Route added to CSV file!");
   }

@@ -1,20 +1,17 @@
 package com.bougastefa.app;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-
 public class Flight {
   private String flightId;
-  private LocalDate departureDate;
-  private LocalTime departureTime;
+  private String departureDate;
+  private String departureTime;
   private String routeId;
-  private LocalDate arrivalDate;
-  private LocalTime arrivalTime;
+  private String arrivalDate;
+  private String arrivalTime;
   private String capacity;
 
   // Constructor
-  public Flight(String flightId, LocalDate departureDate, LocalTime departureTime, String routeId,
-      LocalDate arrivalDate, LocalTime arrivalTime, String capacity) {
+  public Flight(String flightId, String departureDate, String departureTime, String routeId,
+      String arrivalDate, String arrivalTime, String capacity) {
     this.flightId = flightId;
     this.departureTime = departureTime;
     this.departureDate = departureDate;
@@ -29,11 +26,11 @@ public class Flight {
     this.flightId = flightId;
   }
 
-  public void setDepartureTime(LocalTime departureTime) {
+  public void setDepartureTime(String departureTime) {
     this.departureTime = departureTime;
   }
 
-  public void setDepartureDate(LocalDate departureDate) {
+  public void setDepartureDate(String departureDate) {
     this.departureDate = departureDate;
   }
 
@@ -41,11 +38,11 @@ public class Flight {
     this.routeId = routeId;
   }
 
-  public void setArrivalDate(LocalDate arrivalDate) {
+  public void setArrivalDate(String arrivalDate) {
     this.arrivalDate = arrivalDate;
   }
 
-  public void setArrivalTime(LocalTime arrivalTime) {
+  public void setArrivalTime(String arrivalTime) {
     this.arrivalTime = arrivalTime;
   }
 
@@ -59,12 +56,12 @@ public class Flight {
   }
 
   @InputOrder(2)
-  public LocalDate getDepartureDate() {
+  public String getDepartureDate() {
     return departureDate;
   }
 
   @InputOrder(3)
-  public LocalTime getDepartureTime() {
+  public String getDepartureTime() {
     return departureTime;
   }
 
@@ -74,12 +71,12 @@ public class Flight {
   }
 
   @InputOrder(4)
-  public LocalDate getArrivalDate() {
+  public String getArrivalDate() {
     return arrivalDate;
   }
 
   @InputOrder(5)
-  public LocalTime getArrivalTime() {
+  public String getArrivalTime() {
     return arrivalTime;
   }
 

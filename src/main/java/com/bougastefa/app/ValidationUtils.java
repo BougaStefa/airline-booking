@@ -2,7 +2,7 @@ package com.bougastefa.app;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-
+import java.time.format.DateTimeFormatter;
 import java.time.DateTimeException;
 
 public class ValidationUtils {
@@ -43,7 +43,7 @@ public class ValidationUtils {
       return false;
     }
     // postcodes can be alphanumeric with optional spaces
-    return postcode.matches("[a-zA-Z09\\s]{3,10}");
+    return postcode.matches("[a-zA-Z0-9\\s]{3,10}");
   }
 
   public static boolean isValidPositiveInteger(String number, int maxDigits) {
@@ -73,9 +73,11 @@ public class ValidationUtils {
     }
     try {
       LocalDate date = LocalDate.parse(dateString);
-      return true;
+      LocalDate startDate = LocalDate.now().minusYears(100);
+      LocalDate endDate = LocalDate.now().plusYears(100);
+      return !date.isBefore(startDate) && !date.isAfter(endDate); // Only 100 years plus minus accepted
     } catch (DateTimeException e) {
-      System.out.println("Invalid date format. Expected: YYYY-MM-DD");
+      System.out.println("Invalid date format or date range. Expected: YYYY-MM-DD");
       return false;
     }
   }
@@ -85,8 +87,9 @@ public class ValidationUtils {
     if (isNullOrEmpty(timeString)) {
       return false;
     }
+    DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
     try {
-      LocalTime time = LocalTime.parse(timeString);
+      LocalTime.parse(timeString, timeFormatter);
       return true;
     } catch (DateTimeException e) {
       System.out.println("Invalid time format. Expected: HH:mm:ss");
@@ -104,7 +107,7 @@ public class ValidationUtils {
 
   // When validating stops they can be empty
   public static boolean isValidAirport(String airport, int stop) {
-    return airport.matches("[A-Z]{3}$");
+    return airport.matches("[A-Z]{3}$") || airport == null || airport.trim().isEmpty();
   }
 
   public static boolean isValidFlightId(String flightId) {
