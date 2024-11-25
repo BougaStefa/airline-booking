@@ -1,7 +1,5 @@
 package com.bougastefa.app;
 
-import java.io.*;
-
 public class Customer {
   private String customerId;
   private String forename;
@@ -71,7 +69,7 @@ public class Customer {
   }
 
   @InputOrder(6)
-  public String postcode() {
+  public String getPostcode() {
     return postcode;
   }
 }

@@ -1,11 +1,6 @@
 package com.bougastefa.app;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
-
-import javax.xml.validation.Validator;
 
 public class Menu {
   private Scanner scanner;
@@ -111,7 +106,8 @@ public class Menu {
   private void addBooking() {
     System.out.println("Enter Booking Details:");
 
-    InputValidationMethod bookingIdLengthCheck = input -> ValidationUtils.isValidPositiveInteger(input, 50);
+    InputValidationMethod bookingIdLengthCheck = input -> ValidationUtils.isValidPositiveInteger(input, 50)
+        && ValidationUtils.isUniquePrimaryKey(input, "Booking.csv");
     String bookingId = getValidatedInput("Booking ID: ", bookingIdLengthCheck);
     String adultTicket = getValidatedInput("Adult Tickets: ", ValidationUtils::isValidPositiveInteger);
     String childTicket = getValidatedInput("Child Tickets: ", ValidationUtils::isValidPositiveInteger);
@@ -127,7 +123,9 @@ public class Menu {
   private void addRoute() {
     System.out.println("Enter Route Details:");
 
-    InputValidationMethod routeIdLengthCheck = input -> ValidationUtils.isValidPositiveInteger(input, 50);
+    InputValidationMethod routeIdLengthCheck = input -> ValidationUtils.isValidPositiveInteger(input, 50)
+        && ValidationUtils.isUniquePrimaryKey(input, "Route.csv");
+    ;
     String routeId = getValidatedInput("Route ID: ", routeIdLengthCheck);
     String departFrom = getValidatedInput("Depart From: ", ValidationUtils::isValidAirport);
     String arriveAt = getValidatedInput("Arrive At: ", ValidationUtils::isValidAirport);

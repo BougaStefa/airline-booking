@@ -3,6 +3,11 @@ package com.bougastefa.app;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashSet;
+import java.util.Set;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.time.DateTimeException;
 
 public class ValidationUtils {
@@ -18,7 +23,7 @@ public class ValidationUtils {
     }
     // customerId has to be GR followed by a
     // positive integer
-    return customerId.matches("GR\\d{1,48}");
+    return customerId.matches("GR\\d{1,48}") && isUniquePrimaryKey(customerId, "Customer.csv");
   }
 
   public static boolean isValidName(String name) {
@@ -114,6 +119,20 @@ public class ValidationUtils {
     if (isNullOrEmpty(flightId)) {
       return false;
     }
-    return flightId.matches("^[A-Z]{2}\\d{3}$");
+    return flightId.matches("^[A-Z]{2}\\d{3}$") && isUniquePrimaryKey(flightId, "Flight.csv");
+  }
+
+  public static boolean isUniquePrimaryKey(String key, String filename) {
+    Set<String> keysSet = new HashSet<>();
+    try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
+      String line;
+      while ((line = br.readLine()) != null) {
+        String[] parts = line.split(",");
+        keysSet.add(parts[0]);
+      }
+    } catch (IOException e) {
+      System.out.println("Error reading file: " + e.getMessage());
+    }
+    return !keysSet.contains(key);
   }
 }
