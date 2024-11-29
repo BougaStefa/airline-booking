@@ -52,9 +52,10 @@ public class ValidationUtils {
   }
 
   public static boolean isValidPositiveInteger(String number, int maxDigits) {
-    if (isNullOrEmpty(number)) {
+    if (isNullOrEmpty(number) || maxDigits < 1) {
       return false;
     }
+
     return number.matches("\\d{1," + maxDigits + "}$");
   }
 
@@ -112,7 +113,10 @@ public class ValidationUtils {
 
   // When validating stops they can be empty
   public static boolean isValidAirport(String airport, int stop) {
-    return airport.matches("[A-Z]{3}$") || airport == null || airport.trim().isEmpty();
+    if (airport != null) {
+      return airport.matches("[A-Z]{3}$") || airport.trim().isEmpty();
+    }
+    return false;
   }
 
   public static boolean isValidFlightId(String flightId) {

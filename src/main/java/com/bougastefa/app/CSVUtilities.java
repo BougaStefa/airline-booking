@@ -27,7 +27,7 @@ public class CSVUtilities {
   }
 
   // Sort methods in the right order based on annotation
-  private static Method[] getOrderedMethods(Object object) {
+  public static Method[] getOrderedMethods(Object object) {
     return Arrays.stream(object.getClass().getDeclaredMethods())
         .filter(method -> method.isAnnotationPresent(InputOrder.class))
         .sorted(Comparator.comparing(m -> m.getAnnotation(InputOrder.class)
@@ -36,7 +36,7 @@ public class CSVUtilities {
   }
 
   // Get result of calling the getter
-  private static String invokeGetter(Object object, Method method) {
+  public static String invokeGetter(Object object, Method method) {
     try {
       Object value = method.invoke(object);
       return value != null ? value.toString() : "";
