@@ -2,7 +2,7 @@ package com.bougastefa.app;
 
 import java.lang.annotation.*;
 
-//Defines the order items are to appear in the CSV file
+//Annotating the method declaration in order to retain order.
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
