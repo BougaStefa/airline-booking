@@ -136,7 +136,7 @@ public class ValidationUtils {
         keysSet.add(parts[0]);
       }
     } catch (IOException e) {
-      System.out.println("Error reading file: " + e.getMessage());
+      return true;
     }
     return !keysSet.contains(key);
   }
