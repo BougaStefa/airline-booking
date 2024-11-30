@@ -4,9 +4,18 @@ import java.util.Scanner;
 
 public class Menu {
   private Scanner scanner;
+  private CustomerService customerService;
+  private FlightService flightService;
+  private BookingService bookingService;
+  private RouteService routeService;
 
   public Menu() {
     this.scanner = new Scanner(System.in);
+    ValidationUtils validator = new ValidationUtils();
+    this.customerService = new CustomerService(validator);
+    this.flightService = new FlightService(validator);
+    this.bookingService = new BookingService(validator);
+    this.routeService = new RouteService(validator);
   }
 
   public void displayMenu() {
@@ -23,16 +32,16 @@ public class Menu {
 
       switch (choice) {
         case 1:
-          addCustomer();
+          customerService.addCustomer(scanner);
           break;
         case 2:
-          addFlight();
+          flightService.addFlight(scanner);
           break;
         case 3:
-          addBooking();
+          bookingService.addBooking(scanner);
           break;
         case 4:
-          addRoute();
+          routeService.addRoute(scanner);
           break;
         case 5:
           System.out.println("Exiting...");
@@ -48,94 +57,5 @@ public class Menu {
         break;
       }
     }
-  }
-
-  private String getValidatedInput(String prompt, InputValidationMethod validator) {
-    String input;
-    while (true) {
-      System.out.println(prompt);
-      input = scanner.nextLine();
-      if (validator.isValid(input)) {
-        break;
-      } else {
-        System.out.println("Invalid input, please try again.");
-      }
-    }
-    return input;
-  }
-
-  @FunctionalInterface
-  public interface InputValidationMethod {
-    boolean isValid(String input);
-  }
-
-  private void addCustomer() {
-    System.out.println("Enter Customer Details:");
-
-    // Validating each column until a correct input is provided
-    String customerId = getValidatedInput("Customer ID (GR followed by digits): ", ValidationUtils::isValidCustomerId);
-    String forename = getValidatedInput("Forename: ", ValidationUtils::isValidName);
-    String surname = getValidatedInput("Surname: ", ValidationUtils::isValidName);
-    String street = getValidatedInput("Street: ", ValidationUtils::isValidAddress);
-    String town = getValidatedInput("Town: ", ValidationUtils::isValidName);
-    String postcode = getValidatedInput("Postcode: ", ValidationUtils::isValidPostcode);
-
-    Customer customer = new Customer(customerId, forename, surname, street, town, postcode);
-    CSVUtilities.exportToCsv(customer, "Customer.csv");
-    System.out.println("Customer added to CSV file!");
-  }
-
-  private void addFlight() {
-    System.out.println("Enter Flight Details:");
-
-    String flightId = getValidatedInput("Flight ID: ", ValidationUtils::isValidFlightId);
-    String departureDate = getValidatedInput("Departure Date: ", ValidationUtils::isValidDate);
-    String arrivalDate = getValidatedInput("Arrival Date: ", ValidationUtils::isValidDate);
-    String departureTime = getValidatedInput("Departure Time: ", ValidationUtils::isValidTime);
-    String arrivalTime = getValidatedInput("Arrival Time: ", ValidationUtils::isValidTime);
-    String capacity = getValidatedInput("Capacity: ", ValidationUtils::isValidPositiveInteger);
-    InputValidationMethod routeIdLengthCheck = input -> ValidationUtils.isValidPositiveInteger(input, 50);
-    String routeId = getValidatedInput("Route ID: ", routeIdLengthCheck);
-
-    Flight flight = new Flight(flightId, departureDate, departureTime, routeId, arrivalDate,
-        arrivalTime, capacity);
-    CSVUtilities.exportToCsv(flight, "Flight.csv");
-    System.out.println("Flight added to CSV file!");
-  }
-
-  private void addBooking() {
-    System.out.println("Enter Booking Details:");
-
-    InputValidationMethod bookingIdLengthCheck = input -> ValidationUtils.isValidPositiveInteger(input, 50)
-        && ValidationUtils.isUniquePrimaryKey(input, "Booking.csv");
-    String bookingId = getValidatedInput("Booking ID: ", bookingIdLengthCheck);
-    String adultTicket = getValidatedInput("Adult Tickets: ", ValidationUtils::isValidPositiveInteger);
-    String childTicket = getValidatedInput("Child Tickets: ", ValidationUtils::isValidPositiveInteger);
-    String concessionTicket = getValidatedInput("Concession Tickets: ", ValidationUtils::isValidPositiveInteger);
-    String customerId = getValidatedInput("Customer ID: ", ValidationUtils::isValidCustomerId);
-    String flightId = getValidatedInput("Flight ID: ", ValidationUtils::isValidFlightId);
-
-    Booking booking = new Booking(bookingId, customerId, adultTicket, childTicket, concessionTicket, flightId);
-    CSVUtilities.exportToCsv(booking, "Booking.csv");
-    System.out.println("Booking added to CSV file!");
-  }
-
-  private void addRoute() {
-    System.out.println("Enter Route Details:");
-
-    InputValidationMethod routeIdLengthCheck = input -> ValidationUtils.isValidPositiveInteger(input, 50)
-        && ValidationUtils.isUniquePrimaryKey(input, "Route.csv");
-    ;
-    String routeId = getValidatedInput("Route ID: ", routeIdLengthCheck);
-    String departFrom = getValidatedInput("Depart From: ", ValidationUtils::isValidAirport);
-    String arriveAt = getValidatedInput("Arrive At: ", ValidationUtils::isValidAirport);
-    InputValidationMethod isValidStop = input -> ValidationUtils.isValidAirport(input, 1);
-    String midStopOne = getValidatedInput("Mid Stop One: ", isValidStop);
-    String midStopTwo = getValidatedInput(("Mid Stop Two: "), isValidStop);
-
-    Route route = new Route(routeId, departFrom, arriveAt, midStopOne, midStopTwo);
-    System.out.println(routeId + departFrom + arriveAt + midStopTwo + midStopOne);
-    CSVUtilities.exportToCsv(route, "Route.csv");
-    System.out.println("Route added to CSV file!");
   }
 }

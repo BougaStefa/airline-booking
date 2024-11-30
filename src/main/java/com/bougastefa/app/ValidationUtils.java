@@ -1,5 +1,6 @@
 package com.bougastefa.app;
 
+import java.util.Scanner;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -138,5 +139,24 @@ public class ValidationUtils {
       System.out.println("Error reading file: " + e.getMessage());
     }
     return !keysSet.contains(key);
+  }
+
+  public String getValidatedInput(Scanner scanner, String prompt, InputValidationMethod validator) {
+    String input;
+    while (true) {
+      System.out.println(prompt);
+      input = scanner.nextLine();
+      if (validator.isValid(input)) {
+        break;
+      } else {
+        System.out.println("Invalid input, please try again.");
+      }
+    }
+    return input;
+  }
+
+  @FunctionalInterface
+  public interface InputValidationMethod {
+    boolean isValid(String input);
   }
 }
