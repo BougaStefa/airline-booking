@@ -27,12 +27,12 @@ public class ValidationUtilsTest {
   }
 
   @Test
-  void testIsValidCustomerId() {
-    assertTrue(validationUtils.isValidCustomerId("GR123"));
-    assertFalse(validationUtils.isValidCustomerId("GR"));
-    assertFalse(validationUtils.isValidCustomerId("123"));
-    assertFalse(validationUtils.isValidCustomerId(""));
-    assertFalse(validationUtils.isValidCustomerId(null));
+  void testIsValidCustomerIdFormat() {
+    assertTrue(validationUtils.isValidCustomerIdFormat("GR123"));
+    assertFalse(validationUtils.isValidCustomerIdFormat("GR"));
+    assertFalse(validationUtils.isValidCustomerIdFormat("123"));
+    assertFalse(validationUtils.isValidCustomerIdFormat(""));
+    assertFalse(validationUtils.isValidCustomerIdFormat(null));
   }
 
   @Test

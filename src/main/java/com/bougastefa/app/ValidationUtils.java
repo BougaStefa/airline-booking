@@ -11,55 +11,63 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.time.DateTimeException;
 
-public class ValidationUtils {
+public class ValidationUtils implements IValidationUtils {
 
   // Checking for empty inputs method to avoid repeating the statement
+  @Override
   public boolean isNullOrEmpty(String value) {
     return value == null || value.trim().isEmpty();
   }
 
+  @Override
   public boolean isValidCustomerId(String customerId) {
     if (isNullOrEmpty(customerId)) {
       return false;
     }
-    // customerId has to be GR followed by a
-    // positive integer
-    return customerId.matches("GR\\d{1,48}") && isUniquePrimaryKey(customerId, "Customer.csv");
+    return isValidCustomerIdFormat(customerId) && isUniquePrimaryKey(customerId, "Customer.csv");
   }
 
+  @Override
+  public boolean isValidCustomerIdFormat(String customerId) {
+    if (isNullOrEmpty(customerId)) {
+      return false;
+    }
+    return customerId.matches("GR\\d{1,48}");
+  }
+
+  @Override
   public boolean isValidName(String name) {
     if (isNullOrEmpty(name)) {
       return false;
     }
-    // names can have letters spaces and apostrophes, works for human and town names
     return name.matches("[a-zA-Z\\s'-]{2,50}");
   }
 
+  @Override
   public boolean isValidAddress(String address) {
     if (isNullOrEmpty(address)) {
       return false;
     }
-    // address can be alphanumeric or have commas, hashes, full stops, dashes or
-    // forward slashes
     return address.matches("[a-zA-Z0-9\\s,\\.\\-#/]{5,100}");
   }
 
+  @Override
   public boolean isValidPostcode(String postcode) {
     if (isNullOrEmpty(postcode)) {
       return false;
     }
-    // postcodes can be alphanumeric with optional spaces
     return postcode.matches("[a-zA-Z0-9\\s]{3,10}");
   }
 
+  @Override
   public boolean isValidPositiveInteger(String number, int maxDigits) {
     if (isNullOrEmpty(number) || maxDigits < 1) {
       return false;
     }
-
     return number.matches("\\d{1," + maxDigits + "}$");
   }
 
+  @Override
   public boolean isValidPositiveInteger(String number) {
     if (isNullOrEmpty(number)) {
       return false;
@@ -67,6 +75,7 @@ public class ValidationUtils {
     return number.matches("\\d+");
   }
 
+  @Override
   public boolean isValidAlphanumerical(String value) {
     if (isNullOrEmpty(value)) {
       return false;
@@ -74,6 +83,7 @@ public class ValidationUtils {
     return value.matches("[a-zA-Z0-9]{0,50}");
   }
 
+  @Override
   public boolean isValidDate(String dateString) {
     if (isNullOrEmpty(dateString)) {
       return false;
@@ -82,14 +92,14 @@ public class ValidationUtils {
       LocalDate date = LocalDate.parse(dateString);
       LocalDate startDate = LocalDate.now().minusYears(100);
       LocalDate endDate = LocalDate.now().plusYears(100);
-      return !date.isBefore(startDate) && !date.isAfter(endDate); // Only 100 years plus minus accepted
+      return !date.isBefore(startDate) && !date.isAfter(endDate);
     } catch (DateTimeException e) {
       System.out.println("Invalid date format or date range. Expected: YYYY-MM-DD");
       return false;
     }
   }
 
-  // For date and time, if the parsing fails it means the input was incorrect.
+  @Override
   public boolean isValidTime(String timeString) {
     if (isNullOrEmpty(timeString)) {
       return false;
@@ -104,15 +114,15 @@ public class ValidationUtils {
     }
   }
 
+  @Override
   public boolean isValidAirport(String airport) {
-    // Arrivals and departures mustn't be empty
     if (isNullOrEmpty(airport)) {
       return false;
     }
     return airport.matches("[A-Z]{3}$");
   }
 
-  // When validating stops they can be empty
+  @Override
   public boolean isValidAirport(String airport, int stop) {
     if (airport != null) {
       return airport.matches("[A-Z]{3}$") || airport.trim().isEmpty();
@@ -120,6 +130,7 @@ public class ValidationUtils {
     return false;
   }
 
+  @Override
   public boolean isValidFlightId(String flightId) {
     if (isNullOrEmpty(flightId)) {
       return false;
@@ -127,6 +138,7 @@ public class ValidationUtils {
     return flightId.matches("^[A-Z]{2}\\d{3}$") && isUniquePrimaryKey(flightId, "Flight.csv");
   }
 
+  @Override
   public boolean isUniquePrimaryKey(String key, String filename) {
     Set<String> keysSet = new HashSet<>();
     try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
@@ -141,6 +153,7 @@ public class ValidationUtils {
     return !keysSet.contains(key);
   }
 
+  @Override
   public String getValidatedInput(Scanner scanner, String prompt, InputValidationMethod validator) {
     String input;
     while (true) {

@@ -3,9 +3,9 @@ package com.bougastefa.app;
 import java.util.Scanner;
 
 public class CustomerService {
-  private ValidationUtils validationUtils;
+  private IValidationUtils validationUtils;
 
-  public CustomerService(ValidationUtils validationUtils) {
+  public CustomerService(IValidationUtils validationUtils) {
     this.validationUtils = validationUtils;
   }
 
