@@ -1,5 +1,6 @@
 package com.bougastefa.app;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -11,10 +12,20 @@ import java.nio.file.Paths;
 
 public class ValidationUtilsTest {
   private ValidationUtils validationUtils;
+  private final String TEST_CSV_FILE = "Customer.csv";
 
   @BeforeEach
   void setUp() {
     validationUtils = new ValidationUtils();
+  }
+
+  @AfterEach
+  void cleanup() {
+    try {
+      Files.deleteIfExists(Paths.get(TEST_CSV_FILE));
+    } catch (IOException e) {
+      System.out.println("Failed to delete test file: " + e.getMessage());
+    }
   }
 
   @Test
