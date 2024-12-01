@@ -12,18 +12,18 @@ public class BookingService {
   public void addBooking(Scanner scanner) {
     System.out.println("Enter Booking Details:");
 
-    ValidationUtils.InputValidationMethod bookingIdLengthCheck = input -> ValidationUtils.isValidPositiveInteger(input,
+    ValidationUtils.InputValidationMethod bookingIdLengthCheck = input -> validationUtils.isValidPositiveInteger(input,
         50)
-        && ValidationUtils.isUniquePrimaryKey(input, "Booking.csv");
+        && validationUtils.isUniquePrimaryKey(input, "Booking.csv");
     String bookingId = validationUtils.getValidatedInput(scanner, "Booking ID: ", bookingIdLengthCheck);
     String adultTicket = validationUtils.getValidatedInput(scanner, "Adult Tickets: ",
-        ValidationUtils::isValidPositiveInteger);
+        validationUtils::isValidPositiveInteger);
     String childTicket = validationUtils.getValidatedInput(scanner, "Child Tickets: ",
-        ValidationUtils::isValidPositiveInteger);
+        validationUtils::isValidPositiveInteger);
     String concessionTicket = validationUtils.getValidatedInput(scanner, "Concession Tickets: ",
-        ValidationUtils::isValidPositiveInteger);
-    String customerId = validationUtils.getValidatedInput(scanner, "Customer ID: ", ValidationUtils::isValidCustomerId);
-    String flightId = validationUtils.getValidatedInput(scanner, "Flight ID: ", ValidationUtils::isValidFlightId);
+        validationUtils::isValidPositiveInteger);
+    String customerId = validationUtils.getValidatedInput(scanner, "Customer ID: ", validationUtils::isValidCustomerId);
+    String flightId = validationUtils.getValidatedInput(scanner, "Flight ID: ", validationUtils::isValidFlightId);
 
     Booking booking = new Booking(bookingId, customerId, adultTicket, childTicket, concessionTicket, flightId);
     CSVUtilities.exportToCsv(booking, "Booking.csv");

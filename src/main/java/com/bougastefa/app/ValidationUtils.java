@@ -14,11 +14,11 @@ import java.time.DateTimeException;
 public class ValidationUtils {
 
   // Checking for empty inputs method to avoid repeating the statement
-  public static boolean isNullOrEmpty(String value) {
+  public boolean isNullOrEmpty(String value) {
     return value == null || value.trim().isEmpty();
   }
 
-  public static boolean isValidCustomerId(String customerId) {
+  public boolean isValidCustomerId(String customerId) {
     if (isNullOrEmpty(customerId)) {
       return false;
     }
@@ -27,7 +27,7 @@ public class ValidationUtils {
     return customerId.matches("GR\\d{1,48}") && isUniquePrimaryKey(customerId, "Customer.csv");
   }
 
-  public static boolean isValidName(String name) {
+  public boolean isValidName(String name) {
     if (isNullOrEmpty(name)) {
       return false;
     }
@@ -35,7 +35,7 @@ public class ValidationUtils {
     return name.matches("[a-zA-Z\\s'-]{2,50}");
   }
 
-  public static boolean isValidAddress(String address) {
+  public boolean isValidAddress(String address) {
     if (isNullOrEmpty(address)) {
       return false;
     }
@@ -44,7 +44,7 @@ public class ValidationUtils {
     return address.matches("[a-zA-Z0-9\\s,\\.\\-#/]{5,100}");
   }
 
-  public static boolean isValidPostcode(String postcode) {
+  public boolean isValidPostcode(String postcode) {
     if (isNullOrEmpty(postcode)) {
       return false;
     }
@@ -52,7 +52,7 @@ public class ValidationUtils {
     return postcode.matches("[a-zA-Z0-9\\s]{3,10}");
   }
 
-  public static boolean isValidPositiveInteger(String number, int maxDigits) {
+  public boolean isValidPositiveInteger(String number, int maxDigits) {
     if (isNullOrEmpty(number) || maxDigits < 1) {
       return false;
     }
@@ -60,21 +60,21 @@ public class ValidationUtils {
     return number.matches("\\d{1," + maxDigits + "}$");
   }
 
-  public static boolean isValidPositiveInteger(String number) {
+  public boolean isValidPositiveInteger(String number) {
     if (isNullOrEmpty(number)) {
       return false;
     }
     return number.matches("\\d+");
   }
 
-  public static boolean isValidAlphanumerical(String value) {
+  public boolean isValidAlphanumerical(String value) {
     if (isNullOrEmpty(value)) {
       return false;
     }
     return value.matches("[a-zA-Z0-9]{0,50}");
   }
 
-  public static boolean isValidDate(String dateString) {
+  public boolean isValidDate(String dateString) {
     if (isNullOrEmpty(dateString)) {
       return false;
     }
@@ -90,7 +90,7 @@ public class ValidationUtils {
   }
 
   // For date and time, if the parsing fails it means the input was incorrect.
-  public static boolean isValidTime(String timeString) {
+  public boolean isValidTime(String timeString) {
     if (isNullOrEmpty(timeString)) {
       return false;
     }
@@ -104,7 +104,7 @@ public class ValidationUtils {
     }
   }
 
-  public static boolean isValidAirport(String airport) {
+  public boolean isValidAirport(String airport) {
     // Arrivals and departures mustn't be empty
     if (isNullOrEmpty(airport)) {
       return false;
@@ -113,21 +113,21 @@ public class ValidationUtils {
   }
 
   // When validating stops they can be empty
-  public static boolean isValidAirport(String airport, int stop) {
+  public boolean isValidAirport(String airport, int stop) {
     if (airport != null) {
       return airport.matches("[A-Z]{3}$") || airport.trim().isEmpty();
     }
     return false;
   }
 
-  public static boolean isValidFlightId(String flightId) {
+  public boolean isValidFlightId(String flightId) {
     if (isNullOrEmpty(flightId)) {
       return false;
     }
     return flightId.matches("^[A-Z]{2}\\d{3}$") && isUniquePrimaryKey(flightId, "Flight.csv");
   }
 
-  public static boolean isUniquePrimaryKey(String key, String filename) {
+  public boolean isUniquePrimaryKey(String key, String filename) {
     Set<String> keysSet = new HashSet<>();
     try (BufferedReader br = new BufferedReader(new FileReader(filename))) {
       String line;

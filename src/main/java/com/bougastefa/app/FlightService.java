@@ -12,13 +12,13 @@ public class FlightService {
   public void addFlight(Scanner scanner) {
     System.out.println("Enter Flight Details:");
 
-    String flightId = validationUtils.getValidatedInput(scanner, "Flight ID: ", ValidationUtils::isValidFlightId);
-    String departureDate = validationUtils.getValidatedInput(scanner, "Departure Date: ", ValidationUtils::isValidDate);
-    String arrivalDate = validationUtils.getValidatedInput(scanner, "Arrival Date: ", ValidationUtils::isValidDate);
-    String departureTime = validationUtils.getValidatedInput(scanner, "Departure Time: ", ValidationUtils::isValidTime);
-    String arrivalTime = validationUtils.getValidatedInput(scanner, "Arrival Time: ", ValidationUtils::isValidTime);
-    String capacity = validationUtils.getValidatedInput(scanner, "Capacity: ", ValidationUtils::isValidPositiveInteger);
-    ValidationUtils.InputValidationMethod routeIdLengthCheck = input -> ValidationUtils.isValidPositiveInteger(input,
+    String flightId = validationUtils.getValidatedInput(scanner, "Flight ID: ", validationUtils::isValidFlightId);
+    String departureDate = validationUtils.getValidatedInput(scanner, "Departure Date: ", validationUtils::isValidDate);
+    String arrivalDate = validationUtils.getValidatedInput(scanner, "Arrival Date: ", validationUtils::isValidDate);
+    String departureTime = validationUtils.getValidatedInput(scanner, "Departure Time: ", validationUtils::isValidTime);
+    String arrivalTime = validationUtils.getValidatedInput(scanner, "Arrival Time: ", validationUtils::isValidTime);
+    String capacity = validationUtils.getValidatedInput(scanner, "Capacity: ", validationUtils::isValidPositiveInteger);
+    ValidationUtils.InputValidationMethod routeIdLengthCheck = input -> validationUtils.isValidPositiveInteger(input,
         50);
     String routeId = validationUtils.getValidatedInput(scanner, "Route ID: ", routeIdLengthCheck);
 
