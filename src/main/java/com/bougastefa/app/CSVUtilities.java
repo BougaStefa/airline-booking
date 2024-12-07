@@ -8,11 +8,19 @@ import java.util.Comparator;
 import java.util.stream.Collectors;
 
 public class CSVUtilities {
+  private static boolean testMode = false;
+
+  public static void setTestMode(boolean isTestMode) {
+    testMode = isTestMode;
+  }
 
   // Final export to CSV
   public static void exportToCsv(Object object, String filename) {
     if (object == null) {
       throw new IllegalArgumentException("The object is null");
+    }
+    if (testMode) {
+      return;
     }
     try (FileWriter fw = new FileWriter(filename, true)) {
       // Retrieve and sort methods

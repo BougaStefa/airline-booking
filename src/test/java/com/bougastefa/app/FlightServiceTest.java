@@ -21,6 +21,7 @@ public class FlightServiceTest {
   public void setUp() {
     validationUtils = mock(IValidationUtils.class);
     flightService = new FlightService(validationUtils);
+    CSVUtilities.setTestMode(true);
   }
 
   @AfterEach

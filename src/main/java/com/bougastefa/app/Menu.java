@@ -10,8 +10,15 @@ public class Menu {
   private RouteService routeService;
 
   public Menu() {
+    this(new ValidationUtils());
+  }
+
+  protected Menu(IValidationUtils validator) {
     this.scanner = new Scanner(System.in);
-    ValidationUtils validator = new ValidationUtils();
+    initializeServices(validator);
+  }
+
+  protected void initializeServices(IValidationUtils validator) {
     this.customerService = new CustomerService(validator);
     this.flightService = new FlightService(validator);
     this.bookingService = new BookingService(validator);

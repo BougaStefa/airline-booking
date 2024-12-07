@@ -1,14 +1,19 @@
 package com.bougastefa.app;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class CustomerServiceTest {
+  private String testfile = "Customer.csv";
   private IValidationUtils validationUtils;
   private CustomerService customerService;
 
@@ -16,6 +21,17 @@ public class CustomerServiceTest {
   public void setUp() {
     validationUtils = mock(IValidationUtils.class);
     customerService = new CustomerService(validationUtils);
+    CSVUtilities.setTestMode(true);
+  }
+
+  @AfterEach
+  void cleanup() {
+    try {
+      Files.deleteIfExists(Paths.get(testfile));
+
+    } catch (IOException e) {
+      System.out.println("Failed to delete test file: " + e.getMessage());
+    }
   }
 
   @Test

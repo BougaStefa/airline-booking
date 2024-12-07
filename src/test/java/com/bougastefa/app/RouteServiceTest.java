@@ -22,9 +22,10 @@ public class RouteServiceTest {
   public void setUp() {
     validationUtils = mock(IValidationUtils.class);
     routeService = new RouteService(validationUtils);
+    CSVUtilities.setTestMode(true);
   }
 
-  @AfterEach // Add this cleanup method
+  @AfterEach
   void cleanup() {
     try {
       Files.deleteIfExists(Paths.get(testfile));

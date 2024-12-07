@@ -14,23 +14,23 @@ import java.util.Scanner;
 public class BookingServiceTest {
   private IValidationUtils validationUtils;
   private BookingService bookingService;
-  private final String[] TEST_FILES = { "Booking.csv" };
+  private final String testFile = "Booking.csv";
 
   @BeforeEach
   public void setUp() {
     validationUtils = mock(IValidationUtils.class);
     bookingService = new BookingService(validationUtils);
+    CSVUtilities.setTestMode(true);
   }
 
   @AfterEach
   void cleanup() {
-    for (String file : TEST_FILES) {
-      try {
-        Files.deleteIfExists(Paths.get(file));
-      } catch (IOException e) {
-        System.out.println("Failed to delete test file: " + e.getMessage());
-      }
+    try {
+      Files.deleteIfExists(Paths.get(testFile));
+    } catch (IOException e) {
+      System.out.println("Failed to delete test file: " + e.getMessage());
     }
+
   }
 
   @Test
