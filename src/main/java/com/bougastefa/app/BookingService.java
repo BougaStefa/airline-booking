@@ -3,10 +3,10 @@ package com.bougastefa.app;
 import java.util.Scanner;
 
 public class BookingService {
-  private ValidationUtils validationUtils;
+  private IValidationUtils validationUtils;
 
-  public BookingService(ValidationUtils validationUtils) {
-    this.validationUtils = validationUtils;
+  public BookingService(IValidationUtils validationUtils2) {
+    this.validationUtils = validationUtils2;
   }
 
   public void addBooking(Scanner scanner) {

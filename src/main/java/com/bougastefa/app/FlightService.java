@@ -3,9 +3,9 @@ package com.bougastefa.app;
 import java.util.Scanner;
 
 public class FlightService {
-  private ValidationUtils validationUtils;
+  private IValidationUtils validationUtils;
 
-  public FlightService(ValidationUtils validationUtils) {
+  public FlightService(IValidationUtils validationUtils) {
     this.validationUtils = validationUtils;
   }
 

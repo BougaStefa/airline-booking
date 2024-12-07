@@ -8,11 +8,12 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class ValidationUtilsTest {
   private ValidationUtils validationUtils;
-  private final String TEST_CSV_FILE = "Customer.csv";
+  private final String[] TEST_FILES = { "Customer.csv", "testfile.csv", "Booking.csv", "Flight.csv", "Route.csv", };
 
   @BeforeEach
   void setUp() {
@@ -21,10 +22,19 @@ public class ValidationUtilsTest {
 
   @AfterEach
   void cleanup() {
-    try {
-      Files.deleteIfExists(Paths.get(TEST_CSV_FILE));
-    } catch (IOException e) {
-      System.out.println("Failed to delete test file: " + e.getMessage());
+    for (String file : TEST_FILES) {
+      try {
+        Path path = Paths.get(file);
+        if (Files.exists(path)) {
+          boolean deleted = Files.deleteIfExists(path);
+          if (!deleted) {
+            System.out.println("Failed to delete file: " + file + " (delete operation returned false)");
+          }
+        }
+      } catch (IOException e) {
+        System.out.println("Failed to delete file: " + file + " Error: " + e.getMessage());
+        e.printStackTrace();
+      }
     }
   }
 
