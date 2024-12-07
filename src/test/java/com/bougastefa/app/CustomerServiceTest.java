@@ -2,6 +2,8 @@ package com.bougastefa.app;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 import java.io.ByteArrayInputStream;
 import java.util.Scanner;
@@ -46,5 +48,16 @@ public class CustomerServiceTest {
 
     // Reset System.in
     System.setIn(System.in);
+  }
+
+  @Test
+  public void testAddCustomer_ValidationFailure() {
+    Scanner scanner = new Scanner(new ByteArrayInputStream("invalid\n".getBytes()));
+    when(validationUtils.getValidatedInput(any(), anyString(), any()))
+        .thenThrow(new IllegalArgumentException("Invalid input"));
+
+    assertThrows(IllegalArgumentException.class, () -> {
+      customerService.addCustomer(scanner);
+    });
   }
 }

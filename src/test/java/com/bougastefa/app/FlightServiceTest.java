@@ -3,6 +3,8 @@ package com.bougastefa.app;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -55,5 +57,17 @@ public class FlightServiceTest {
 
     // Reset System.in
     System.setIn(System.in);
+  }
+
+  @Test
+  public void testAddFlight_InvalidDateFormat() {
+    Scanner scanner = new Scanner(new ByteArrayInputStream("FL123\n2024/12/07\n".getBytes()));
+    when(validationUtils.getValidatedInput(any(), eq("Flight ID: "), any())).thenReturn("FL123");
+    when(validationUtils.getValidatedInput(any(), eq("Departure Date: "), any()))
+        .thenThrow(new IllegalArgumentException("Invalid date format"));
+
+    assertThrows(IllegalArgumentException.class, () -> {
+      flightService.addFlight(scanner);
+    });
   }
 }

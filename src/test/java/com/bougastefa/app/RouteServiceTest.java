@@ -3,6 +3,8 @@ package com.bougastefa.app;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -55,5 +57,17 @@ public class RouteServiceTest {
 
     // Reset System.in
     System.setIn(System.in);
+  }
+
+  @Test
+  public void testAddRoute_InvalidAirportCode() {
+    Scanner scanner = new Scanner(new ByteArrayInputStream("0101\nINVALID\n".getBytes()));
+    when(validationUtils.getValidatedInput(any(), eq("Route ID: "), any())).thenReturn("0101");
+    when(validationUtils.getValidatedInput(any(), eq("Depart From: "), any()))
+        .thenThrow(new IllegalArgumentException("Invalid airport code"));
+
+    assertThrows(IllegalArgumentException.class, () -> {
+      routeService.addRoute(scanner);
+    });
   }
 }

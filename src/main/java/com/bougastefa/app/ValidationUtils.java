@@ -154,6 +154,51 @@ public class ValidationUtils implements IValidationUtils {
   }
 
   @Override
+  public boolean isValidTicketCombination(String adultTickets, String childTickets, String concessionTickets) {
+    try {
+      int adults = Integer.parseInt(adultTickets);
+      int children = Integer.parseInt(childTickets);
+      int concessions = Integer.parseInt(concessionTickets);
+      return (adults + children + concessions) > 0;
+    } catch (NumberFormatException e) {
+      return false;
+    }
+  }
+
+  @Override
+  public String getValidatedTicketCombination(Scanner scanner, String adultTickets, String childTickets,
+      String concessionTickets) {
+    boolean ticketsConfirmed = false;
+    String confirm = "";
+
+    do {
+      // Show summary of tickets
+      System.out.println("\nTicket Summary:");
+      System.out.println("Adult Tickets: " + adultTickets);
+      System.out.println("Child Tickets: " + childTickets);
+      System.out.println("Concession Tickets: " + concessionTickets);
+
+      if (!isValidTicketCombination(adultTickets, childTickets, concessionTickets)) {
+        System.out.println("Error: At least one ticket must be booked.");
+        return "N";
+      }
+
+      confirm = getValidatedInput(scanner,
+          "Are these tickets correct? (Y to confirm, N to re-enter): ",
+          input -> input.equalsIgnoreCase("Y") || input.equalsIgnoreCase("N"));
+
+      ticketsConfirmed = confirm.equalsIgnoreCase("Y");
+
+      if (!ticketsConfirmed) {
+        System.out.println("\nPlease re-enter the ticket information.");
+      }
+
+    } while (!ticketsConfirmed);
+
+    return confirm;
+  }
+
+  @Override
   public String getValidatedInput(Scanner scanner, String prompt, InputValidationMethod validator) {
     String input;
     while (true) {

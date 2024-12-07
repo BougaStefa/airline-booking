@@ -2,6 +2,7 @@ package com.bougastefa.app;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import java.io.ByteArrayInputStream;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import java.io.BufferedWriter;
@@ -10,6 +11,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Scanner;
 
 public class ValidationUtilsTest {
   private ValidationUtils validationUtils;
@@ -36,6 +38,33 @@ public class ValidationUtilsTest {
         e.printStackTrace();
       }
     }
+  }
+
+  @Test
+  void testGetValidatedTicketCombination() {
+    Scanner scanner = new Scanner(new ByteArrayInputStream("Y\n".getBytes()));
+    ValidationUtils validationUtils = new ValidationUtils();
+
+    String result = validationUtils.getValidatedTicketCombination(scanner, "1", "1", "1");
+    assertEquals("Y", result);
+  }
+
+  @Test
+  void testGetValidatedTicketCombination_Invalid() {
+    Scanner scanner = new Scanner(new ByteArrayInputStream("N\n".getBytes()));
+    ValidationUtils validationUtils = new ValidationUtils();
+
+    String result = validationUtils.getValidatedTicketCombination(scanner, "0", "0", "0");
+    assertEquals("N", result);
+  }
+
+  @Test
+  void testGetValidatedTicketCombination_Reentry() {
+    Scanner scanner = new Scanner(new ByteArrayInputStream("N\nY\n".getBytes()));
+    ValidationUtils validationUtils = new ValidationUtils();
+
+    String result = validationUtils.getValidatedTicketCombination(scanner, "1", "0", "0");
+    assertEquals("Y", result);
   }
 
   @Test

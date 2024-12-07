@@ -16,12 +16,19 @@ public class BookingService {
         50)
         && validationUtils.isUniquePrimaryKey(input, "Booking.csv");
     String bookingId = validationUtils.getValidatedInput(scanner, "Booking ID: ", bookingIdLengthCheck);
-    String adultTicket = validationUtils.getValidatedInput(scanner, "Adult Tickets: ",
-        validationUtils::isValidPositiveInteger);
-    String childTicket = validationUtils.getValidatedInput(scanner, "Child Tickets: ",
-        validationUtils::isValidPositiveInteger);
-    String concessionTicket = validationUtils.getValidatedInput(scanner, "Concession Tickets: ",
-        validationUtils::isValidPositiveInteger);
+
+    String adultTicket, childTicket, concessionTicket;
+    String confirm;
+    do {
+      adultTicket = validationUtils.getValidatedInput(scanner, "Adult Tickets: ",
+          validationUtils::isValidPositiveInteger);
+      childTicket = validationUtils.getValidatedInput(scanner, "Child Tickets: ",
+          validationUtils::isValidPositiveInteger);
+      concessionTicket = validationUtils.getValidatedInput(scanner, "Concession Tickets: ",
+          validationUtils::isValidPositiveInteger);
+
+      confirm = validationUtils.getValidatedTicketCombination(scanner, adultTicket, childTicket, concessionTicket);
+    } while (confirm.equalsIgnoreCase("N"));
     String customerId = validationUtils.getValidatedInput(scanner, "Customer ID: ", validationUtils::isValidCustomerId);
     String flightId = validationUtils.getValidatedInput(scanner, "Flight ID: ", validationUtils::isValidFlightId);
 

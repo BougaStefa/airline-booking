@@ -33,5 +33,10 @@ public interface IValidationUtils {
 
   boolean isUniquePrimaryKey(String key, String filename);
 
+  boolean isValidTicketCombination(String adultTickets, String childTickets, String concessionTickets);
+
+  String getValidatedTicketCombination(Scanner scanner, String adultTickets, String childTickets,
+      String concessionTickets);
+
   String getValidatedInput(Scanner scanner, String prompt, ValidationUtils.InputValidationMethod validator);
 }
