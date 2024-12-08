@@ -37,6 +37,7 @@ public class Route {
     this.midStopTwo = midStopTwo;
   }
 
+  // Annotating getters in order to put them in the right columns on the CSV
   @InputOrder(1)
   public String getRouteId() {
     return routeId;

@@ -6,6 +6,8 @@ import java.lang.annotation.*;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
+// Annotation can only be used on methods and is retained at runtime for
+// reflection
 public @interface InputOrder {
   int value();
 }

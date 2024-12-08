@@ -2,6 +2,7 @@ package com.bougastefa.app;
 
 import java.util.Scanner;
 
+//Main menu class. Acts as the main interface for uesr interraction.
 public class Menu {
   private Scanner scanner;
   private CustomerService customerService;
@@ -9,15 +10,20 @@ public class Menu {
   private BookingService bookingService;
   private RouteService routeService;
 
+  // Constructor to create menu object with standard validation
   public Menu() {
     this(new ValidationUtils());
   }
 
+  // Protected Constructor allowing custom validation injection
+  // Main purpose is testing
   protected Menu(IValidationUtils validator) {
     this.scanner = new Scanner(System.in);
     initializeServices(validator);
   }
 
+  // Instances for the different services for different operations with the
+  // provided validator
   protected void initializeServices(IValidationUtils validator) {
     this.customerService = new CustomerService(validator);
     this.flightService = new FlightService(validator);
@@ -25,6 +31,15 @@ public class Menu {
     this.routeService = new RouteService(validator);
   }
 
+  /**
+   * Displays and handles the main menu interface.
+   * Provides a loop that:
+   * 1. Shows available options
+   * 2. Processes user selection
+   * 3. Delegates to appropriate service
+   * 4. Asks if user wants to continue
+   * 5. Handles program exit
+   */
   public void displayMenu() {
     while (true) {
       System.out.println("\nSelect an option:");
