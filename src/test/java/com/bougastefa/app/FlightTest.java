@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class FlightTest {
-
+  // Constructing new objects and testing its getters
   @Test
   void testConstructorAndGetters() {
     String flightId = "FL111";
@@ -27,6 +27,7 @@ public class FlightTest {
     assertEquals("300", flight.getCapacity(), "Capacity should match.");
   }
 
+  // Altering object values to test the setters
   @Test
   void testSeetters() {
     Flight flight = new Flight("FL111", "2024-11-24", "15:00:00", "111", "2024-11-25", "12:00:00", "300");
@@ -49,17 +50,18 @@ public class FlightTest {
     assertEquals("666", flight.getCapacity(), "Capacity should match after setting");
   }
 
+  // Ensure that even if empty input is provided no elements are null
   @Test
   void testDefaultValuesNotNull() {
-    // Arrange & Act
     Flight flight = new Flight("", "", "", "", "", "", "");
 
-    // Assert
+    // Assertions
     assertNotNull(flight.getFlightId(), "Customer ID should not be null");
     assertNotNull(flight.getDepartureTime(), "Forename should not be null");
     assertNotNull(flight.getDepartureTime(), "Surname should not be null");
     assertNotNull(flight.getRouteId(), "Street should not be null");
     assertNotNull(flight.getArrivalDate(), "Town should not be null");
     assertNotNull(flight.getArrivalTime(), "Postcode should not be null");
+    assertNotNull(flight.getCapacity(), "Capacity should not be null");
   }
 }

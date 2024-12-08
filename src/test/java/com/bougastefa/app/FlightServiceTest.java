@@ -21,12 +21,14 @@ public class FlightServiceTest {
   public void setUp() {
     validationUtils = mock(IValidationUtils.class);
     flightService = new FlightService(validationUtils);
+    // Prevent test data from altering program files
     CSVUtilities.setTestMode(true);
   }
 
   @AfterEach
   void cleanup() {
     try {
+      // delete any generated test files just in case
       Files.deleteIfExists(Paths.get(testfile));
     } catch (IOException e) {
       System.out.println("Failed to delete test file: " + e.getMessage());
@@ -62,6 +64,7 @@ public class FlightServiceTest {
 
   @Test
   public void testAddFlight_InvalidDateFormat() {
+    // Test designed to provide wrong date input
     Scanner scanner = new Scanner(new ByteArrayInputStream("FL123\n2024/12/07\n".getBytes()));
     when(validationUtils.getValidatedInput(any(), eq("Flight ID: "), any())).thenReturn("FL123");
     when(validationUtils.getValidatedInput(any(), eq("Departure Date: "), any()))

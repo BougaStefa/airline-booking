@@ -16,11 +16,11 @@ public class InputOrderTest {
 
   @Test
   public void testInputOrderAnnotation() throws NoSuchMethodException {
-    // Using reflection to get the methods from the class
+    // Using reflection to get the methods from the class at runtime
     Method methodOne = InputOrderTest.class.getMethod("methodOne");
     Method methodTwo = InputOrderTest.class.getMethod("methodTwo");
 
-    // Getting the annotatio from each of the methods
+    // Getting the annotation from each of the methods
     InputOrder annotationOne = methodOne.getAnnotation(InputOrder.class);
     InputOrder annotationTwo = methodTwo.getAnnotation(InputOrder.class);
 

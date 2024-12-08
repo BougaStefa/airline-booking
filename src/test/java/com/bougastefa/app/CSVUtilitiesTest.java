@@ -15,6 +15,7 @@ import java.util.List;
 
 public class CSVUtilitiesTest {
 
+  // Exporting null object throws the appropriate error
   @Test
   public void testExportToCsv_NullObject() {
     assertThrows(IllegalArgumentException.class, () -> {
@@ -22,6 +23,7 @@ public class CSVUtilitiesTest {
     });
   }
 
+  // Test for successfull export
   @Test
   public void testExportToCsv_ValidObject() throws IOException {
     String filename = "testfile.csv";
@@ -35,6 +37,7 @@ public class CSVUtilitiesTest {
     Files.delete(Paths.get(filename));
   }
 
+  // Test class for the CSV export tests
   private static class TestObject {
     private String field1;
     private String field2;
@@ -55,15 +58,18 @@ public class CSVUtilitiesTest {
     }
   }
 
+  // Test that the methods are correctly ordered based on annotation
   @Test
   public void testGetOrderedMethods() {
     TestObject testObject = new TestObject("field1", "field2");
     Method[] methods = CSVUtilities.getOrderedMethods(testObject);
+    // Methods not null and in the right order checks
     assertNotNull(methods);
     assertArrayEquals(new String[] { "getField1", "getField2" },
         Stream.of(methods).map(Method::getName).toArray());
   }
 
+  // Test that the getters are successfully invoked
   @Test
   public void testInvokeGetter_ValidMethod() throws NoSuchMethodException {
     TestObject testObject = new TestObject("value1", "value2");
@@ -72,6 +78,7 @@ public class CSVUtilitiesTest {
     assertEquals("value1", result);
   }
 
+  // Test getters returning null values
   @Test
   public void testInvokeGetter_NullValue() throws NoSuchMethodException {
     TestObject testObject = new TestObject(null, "value2");
@@ -80,6 +87,7 @@ public class CSVUtilitiesTest {
     assertEquals("", result);
   }
 
+  // Test non existing methods exception handling
   @Test
   public void testInvokeGetter_Exception() throws NoSuchMethodException {
     TestObject testObject = new TestObject("value1", "value2");

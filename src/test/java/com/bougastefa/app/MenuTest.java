@@ -7,20 +7,23 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.util.Scanner;
 
+//Testing validation and menu flow
 public class MenuTest {
   private IValidationUtils validationUtils;
   private Menu menu;
+  // Capturing console output for verification
   private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
 
   @BeforeEach
   void setUp() {
+    // Resetting all mocks and output capture before each test
     validationUtils = mock(IValidationUtils.class);
     outputStreamCaptor.reset();
     System.setOut(new PrintStream(outputStreamCaptor));
   }
 
+  // Method to simulate user input for menu tests
   private void setupMenuWithInput(String input) {
     ByteArrayInputStream inputStream = new ByteArrayInputStream(input.getBytes());
     System.setIn(inputStream);
@@ -29,9 +32,9 @@ public class MenuTest {
 
   @Test
   void testAddCustomerOption() {
+    // Simulates user selecting 1 for customer, n for no entries and 5 to exit
     setupMenuWithInput("1\nn\n5\n");
 
-    // Setup validation mock with exact prompt texts
     when(validationUtils.getValidatedInput(any(), eq("Customer ID (GR followed by digits): "), any()))
         .thenReturn("GR001");
     when(validationUtils.getValidatedInput(any(), eq("Forename: "), any())).thenReturn("John");
@@ -53,6 +56,7 @@ public class MenuTest {
 
   @Test
   void testAddRouteOption() {
+    // Simulates user selecting Route, n for no entries and 5 to exit
     setupMenuWithInput("4\nn\n5\n");
 
     // Setup validation mock with exact prompt texts
@@ -74,6 +78,7 @@ public class MenuTest {
 
   @Test
   void testAddFlightOption() {
+    // Simulates user selecting Flight, n for no entries and 5 to exit
     setupMenuWithInput("2\nn\n5\n");
 
     // Setup validation mock with exact prompt texts from FlightService
@@ -99,6 +104,7 @@ public class MenuTest {
 
   @Test
   void testAddBookingOption() {
+    // Simulates user selecting 3 for Route, n for no entries and 5 to exit
     setupMenuWithInput("3\nn\n5\n");
 
     when(validationUtils.getValidatedInput(any(), eq("Booking ID: "), any())).thenReturn("BK001");
@@ -119,6 +125,7 @@ public class MenuTest {
     verify(validationUtils).getValidatedInput(any(), eq("Flight ID: "), any());
   }
 
+  // Testing the exit functionality
   @Test
   void testExitOption() {
     setupMenuWithInput("5\n");
@@ -126,6 +133,7 @@ public class MenuTest {
     assertTrue(outputStreamCaptor.toString().contains("Exiting"));
   }
 
+  // Testing user providing incorrect options in the menu
   @Test
   void testInvalidOption() {
     setupMenuWithInput("7\n5\n");
@@ -135,6 +143,8 @@ public class MenuTest {
 
   @Test
   void testMultipleEntriesInOneSession() {
+    // Simulating user adding Customer, y for extra entry, 4 for Route n for no more
+    // entry and 5 to exit
     setupMenuWithInput("1\ny\n4\nn\n5\n");
 
     // Setup customer validation

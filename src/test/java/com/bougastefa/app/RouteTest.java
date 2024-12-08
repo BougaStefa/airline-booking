@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RouteTest {
+  // Constructing new objects and testing its getters
   @Test
   void testConstructorAndGetters() {
     String routeId = "111";
@@ -22,6 +23,7 @@ public class RouteTest {
     assertEquals("DFW", route.getMidStopTwo(), "Second Mid Stop should match");
   }
 
+  // Altering object values to test the setters
   @Test
   void testSetters() {
     Route route = new Route("111", "LAX", "JFK", "ORD", "DFW");

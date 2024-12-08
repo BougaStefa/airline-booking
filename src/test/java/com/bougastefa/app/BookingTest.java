@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BookingTest {
-
+  // Constructing new objects and testing its getters
   @Test
   void testConstructorAndGetters() {
     String bookingId = "1111";
@@ -25,6 +25,7 @@ public class BookingTest {
     assertEquals(flightId, booking.getFlightId(), "FlightId should match.");
   }
 
+  // Altering object values to test the setters
   @Test
   void testSetters() {
     Booking booking = new Booking("111", "GR123", "1", "1", "1", "FL123");
@@ -44,6 +45,7 @@ public class BookingTest {
     assertEquals("FL456", booking.getFlightId(), "FlightId should match after setting.");
   }
 
+  // Ensure that even if empty input is provided no elements are null
   @Test
   void testDefaultValuesNotNull() {
     Booking booking = new Booking("", "", "", "", "", "");

@@ -24,6 +24,7 @@ public class ValidationUtilsTest {
 
   @AfterEach
   void cleanup() {
+    // Loops through and cleans any generated test files
     for (String file : TEST_FILES) {
       try {
         Path path = Paths.get(file);
@@ -40,6 +41,7 @@ public class ValidationUtilsTest {
     }
   }
 
+  // Tests ticket booking with total more than 0 aka valid
   @Test
   void testGetValidatedTicketCombination() {
     Scanner scanner = new Scanner(new ByteArrayInputStream("Y\n".getBytes()));
@@ -49,6 +51,7 @@ public class ValidationUtilsTest {
     assertEquals("Y", result);
   }
 
+  // Tests invalid booking tickets
   @Test
   void testGetValidatedTicketCombination_Invalid() {
     Scanner scanner = new Scanner(new ByteArrayInputStream("N\n".getBytes()));
@@ -58,6 +61,7 @@ public class ValidationUtilsTest {
     assertEquals("N", result);
   }
 
+  // Tests user 2nd attempt to enter valid data
   @Test
   void testGetValidatedTicketCombination_Reentry() {
     Scanner scanner = new Scanner(new ByteArrayInputStream("N\nY\n".getBytes()));
@@ -67,6 +71,7 @@ public class ValidationUtilsTest {
     assertEquals("Y", result);
   }
 
+  // testing possible outcomes for the isNullOrEmpty method
   @Test
   void testIsNullOrEmpty() {
     assertTrue(validationUtils.isNullOrEmpty(null));
@@ -76,6 +81,7 @@ public class ValidationUtilsTest {
     assertFalse(validationUtils.isNullOrEmpty("ab"));
   }
 
+  // Testing cases for proper customerid format
   @Test
   void testIsValidCustomerIdFormat() {
     assertTrue(validationUtils.isValidCustomerIdFormat("GR123"));
@@ -85,6 +91,7 @@ public class ValidationUtilsTest {
     assertFalse(validationUtils.isValidCustomerIdFormat(null));
   }
 
+  // Testing possible cases for Name format
   @Test
   void testIsValidName() {
     assertTrue(validationUtils.isValidName("John"));
@@ -99,6 +106,7 @@ public class ValidationUtilsTest {
     assertFalse(validationUtils.isValidName(null));
   }
 
+  // Testing possible cases for address format
   @Test
   void testIsValidAddress() {
     assertTrue(validationUtils.isValidAddress("123 Street"));
@@ -112,6 +120,7 @@ public class ValidationUtilsTest {
     assertFalse(validationUtils.isValidAddress(null));
   }
 
+  // Testing possible cases for postcode format
   @Test
   void testIsValidPostcode() {
     assertTrue(validationUtils.isValidPostcode("AB1 1AB"));
@@ -123,6 +132,7 @@ public class ValidationUtilsTest {
     assertFalse(validationUtils.isValidPostcode(null));
   }
 
+  // Testing possible cases for isValidPositiveInteger method
   @Test
   void testIsValidPositiveInteger() {
     assertTrue(validationUtils.isValidPositiveInteger("1"));
@@ -138,6 +148,7 @@ public class ValidationUtilsTest {
     assertFalse(validationUtils.isValidPositiveInteger(null));
   }
 
+  // Testing possible cases for isValidAlphanumerical method
   @Test
   void testIsValidAlphanumerical() {
     assertTrue(validationUtils.isValidAlphanumerical("a"));
@@ -166,6 +177,7 @@ public class ValidationUtilsTest {
     assertFalse(validationUtils.isValidAlphanumerical(null));
   }
 
+  // Testing possible cases for valid date format
   @Test
   void testIsValidDate() {
     assertTrue(validationUtils.isValidDate("2021-01-01"));
@@ -194,6 +206,7 @@ public class ValidationUtilsTest {
     assertFalse(validationUtils.isValidDate("1821-01-01"));
   }
 
+  // Testing possible cases for valid time format
   @Test
   void testIsValidTime() {
     assertTrue(validationUtils.isValidTime("00:00:00"));
@@ -205,6 +218,7 @@ public class ValidationUtilsTest {
     assertFalse(validationUtils.isValidTime("0"));
   }
 
+  // Testing possible cases for aiport code format
   @Test
   void testIsValidAirport() {
     assertTrue(validationUtils.isValidAirport("LAX"));
@@ -219,6 +233,7 @@ public class ValidationUtilsTest {
     assertFalse(validationUtils.isValidAirport(null));
   }
 
+  // Testing possible cases for aiport code with the option of blank
   @Test
   void testIsValidAirportForStops() {
     assertTrue(validationUtils.isValidAirport("LAX", 1));
@@ -229,10 +244,11 @@ public class ValidationUtilsTest {
     assertFalse(validationUtils.isValidAirport("ORDD", 1));
     assertFalse(validationUtils.isValidAirport("L", 1));
     assertFalse(validationUtils.isValidAirport("1", 1));
-    assertTrue(validationUtils.isValidAirport("", 1));
+    assertTrue(validationUtils.isValidAirport("", 1)); // Main difference between this method and the previous one
     assertFalse(validationUtils.isValidAirport(null, 1));
   }
 
+  // Testing possible cases for flightid format
   @Test
   void testIsValidFlightId() {
     assertTrue(validationUtils.isValidFlightId("GR123"));
@@ -244,6 +260,7 @@ public class ValidationUtilsTest {
     assertFalse(validationUtils.isValidFlightId("GR12"));
   }
 
+  // Adding two PKs to a test file and checking if the 3rd exists
   @Test
   public void testIsUniquePrimaryKey_UniqueKey() throws IOException {
     String filename = "testfile.csv";
@@ -255,6 +272,7 @@ public class ValidationUtilsTest {
     Files.delete(Paths.get(filename));
   }
 
+  // Adding two PKs to a test file and checking if the first one exists
   @Test
   public void testIsUniquePrimaryKey_NonUniqueKey() throws IOException {
     String filename = "testfile.csv";
@@ -266,6 +284,7 @@ public class ValidationUtilsTest {
     Files.delete(Paths.get(filename));
   }
 
+  // If the file doesn't exist we can assume the PK is unique
   @Test
   public void testIsUniquePrimaryKey_FileNotFound() {
     assertTrue(validationUtils.isUniquePrimaryKey("key1", "nonexistentfile.csv"));
