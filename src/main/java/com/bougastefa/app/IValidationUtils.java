@@ -2,6 +2,7 @@ package com.bougastefa.app;
 
 import java.util.Scanner;
 
+//Interface for validation, defines all validation methods
 public interface IValidationUtils {
   boolean isNullOrEmpty(String value);
 

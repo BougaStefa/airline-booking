@@ -43,6 +43,7 @@ public class Customer {
     this.postcode = postcode;
   }
 
+  // Annotating getters in order to export in the correct column
   @InputOrder(1)
   public String getCustomerId() {
     return customerId;

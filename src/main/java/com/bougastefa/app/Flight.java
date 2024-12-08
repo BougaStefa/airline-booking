@@ -50,6 +50,7 @@ public class Flight {
     this.capacity = capacity;
   }
 
+  // Annotating getters in order to export to the right column
   @InputOrder(1)
   public String getFlightId() {
     return flightId;

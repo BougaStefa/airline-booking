@@ -7,7 +7,10 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
+// Utility class that handles writing data to file 
+// Utilizing reflection and annotations in order to maintain the correct column order in the CSV file
 public class CSVUtilities {
+  // Flag for testing purposes. Stops files from being created during tests.
   private static boolean testMode = false;
 
   public static void setTestMode(boolean isTestMode) {
@@ -15,6 +18,8 @@ public class CSVUtilities {
   }
 
   // Final export to CSV
+  // Get's an array of all the getter methods of an object and calls them in that
+  // order before writing them to file
   public static void exportToCsv(Object object, String filename) {
     if (object == null) {
       throw new IllegalArgumentException("The object is null");
@@ -43,7 +48,7 @@ public class CSVUtilities {
         .toArray(Method[]::new);
   }
 
-  // Get result of calling the getter
+  // Get result of calling the getter and returns it as a string
   public static String invokeGetter(Object object, Method method) {
     try {
       Object value = method.invoke(object);
